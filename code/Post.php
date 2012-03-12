@@ -171,14 +171,8 @@ class Post extends DataObject {
 	 * 
 	 * @return String
 	 */
-	function EditLink() {	
-		if($this->canEdit()) {
-			$url = $this->Link('editpost');
-			
-			return "<a href=\"{$url}/{$this->ID}\" class=\"editPostLink\">" . _t('Post.EDIT','Edit') . "</a>";
-		}
-		
-		return false;
+	function EditLink() {
+		if($this->canEdit()) return $this->Link("editpost/$this->ID");
 	}
 
 	/**
@@ -190,15 +184,7 @@ class Post extends DataObject {
 	 * @return String
 	 */
 	function DeleteLink() {
-		if($this->canDelete()) {
-			$url = $this->Link('deletepost');
-			
-			$firstPost = ($this->isFirstPost()) ? 'firstPost' : '';
-			
-			return "<a class=\"deleteLink $firstPost\" href=\"{$url}/{$this->ID}\">" . _t('Post.DELETE','Delete') ."</a>";
-		}
-		
-		return false;
+		if($this->canDelete()) return $this->Link("deletepost/$this->ID");
 	}
 	
 	/**
@@ -208,9 +194,7 @@ class Post extends DataObject {
 	 * @return String
 	 */
 	function ReplyLink() {
-		$url = $this->Link('reply');
-
-		return "<a href=\"$url\" class=\"replyLink\">" . _t('Post.REPLYLINK','Post Reply') . "</a>";
+		return $this->Link('reply');
 	}
 		
 	/**
@@ -219,9 +203,7 @@ class Post extends DataObject {
 	 * @return String
 	 */
 	function ShowLink() {
-		$url = $this->Link('show');
-		
-		return "<a href=\"$url\" class=\"showLink\">" . _t('Post.SHOWLINK','Show Thread') . "</a>";
+		return $this->Link('show');
 	}
 	
 	/**
@@ -231,15 +213,8 @@ class Post extends DataObject {
 	 * @return String
 	 */
 	function MarkAsSpamLink() {
-		if($this->Thread()->canModerate()) {
-			$member = Member::currentUser();
-		 	if($member->ID != $this->AuthorID) {
-				$link = $this->Forum()->Link('markasspam') .'/'. $this->ID;
-				
-				$firstPost = ($this->isFirstPost()) ? 'firstPost' : '';
-				
-				return "<a href=\"$link\" class=\"markAsSpamLink $firstPost\" rel=\"$this->ID\">". _t('Post.MARKASSPAM', 'Mark as Spam') ."</a>";
-			}
+		if($this->Thread()->canModerate() && Member::currentUserID() != $this->AuthorID) {
+			return $this->Forum()->Link("markasspam/$this->ID");
 		}
 	}
 

@@ -55,7 +55,7 @@
 		 * the dirty and remove that wonderful post
 		 */
 	
-		$('.postModifiers a.deletelink').click(function(){
+		$('.postModifiers a.deleteLink').click(function(){
 			var link = $(this);
 			var first = $(this).hasClass('firstPost');
 			

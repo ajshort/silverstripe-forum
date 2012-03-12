@@ -31,15 +31,15 @@
 	<% if EditLink || DeleteLink %>
 		<div class="postModifiers">
 			<% if EditLink %>
-				$EditLink
+				<a href="$EditLink" class="editPostLink"><% _t('EDIT', 'Edit') %></a>
 			<% end_if %>
 			
 			<% if DeleteLink %>
-				$DeleteLink
+				<a href="$DeleteLink" class="deleteLink <% if IsFirstPost %>firstPost<% end_if %>"><% _t('DELETE', 'Delete') %></a>
 			<% end_if %>
 			
 			<% if MarkAsSpamLink %>
-				$MarkAsSpamLink
+				<a href="$MarkAsSpamLink" class="markAsSpamLink <% if IsFirstPost %>firstPost<% end_if %>"><% _t('MARKASSPAM', 'Mark as spam') %></a>
 			<% end_if %>
 		</div>
 	<% end_if %>
